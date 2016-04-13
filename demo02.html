@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+    </head>
+    <body>
+        <div id="app1">
+            <ul> <!-- 循环列表-->
+                <li v-for="player in players">{{player.name}}---<button v-on:click="deletePlayer($index)">删除</button></li>
+            </ul>
+            
+            <!-- 接收事件 -->
+            <input type="text" v-model="name" />
+            <button v-on:click="addPlayer">add</button>
+        </div>
+
+        <script src="vue.js"></script>
+        <script>
+        new Vue({
+            el: '#app1',
+            data: {
+                name: '', //最好初始化 否则 warning 
+                players: [{name: 'kobe'},{name: 'duncan'},{name: 'wade'}]
+            },
+            methods: {
+                addPlayer: function(){
+                    this.players.push({name: this.name});
+                },
+                deletePlayer: function(i){
+                    this.players.splice(i,1);
+                }
+            }
+        })
+        </script>
+    </body>
+</html>
