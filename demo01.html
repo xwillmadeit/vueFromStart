@@ -5,7 +5,9 @@
     </head>
     <body>
         <div id="app1">
-            {{ message }} 
+            <div v-if="hasBeats">我有 beats</div>
+            <p>{{ message }}</p> 
+            <p>{{*message}}</p>  <!-- 绑定一次 不会改变 -->
             <input type="text" v-model="message" /> <!-- 双向绑定 -->
 
             <ul> <!-- 循环列表-->
@@ -14,14 +16,29 @@
             
             <!-- 接收事件 -->
             <button v-on:click="clickMe">click me</button>
+
+            <!-- v-on 事件的缩写 -->
+            <button @click="clickMe">click me2</button>
+
+            <div>
+                <p>单价：{{price}}</p>
+                <div><button @click="minus">-</button><input type="text" v-model="num" value="1" /><button @click="plus">+</button></div>
+                <p>总价：{{total}}</p>
+            </div>
         </div>
 
         <script src="vue.js"></script>
         <script>
-        new Vue({
+        // 每个 Vue.js 应用的起步都是通过构造函数 Vue 创建一个 Vue 的根实例
+        // 一个 Vue 实例其实正是一个 MVVM 模式中所描述的 ViewModel - 因此在文档中经常会使用 vm 这个变量名。
+        //在实例化 Vue 时，需要传入一个选项对象，它可以包含数据、模板、挂载元素、方法、生命周期钩子等选项。
+        var vm = new Vue({
             el: '#app1',
             data: {
+                hasBeats: true,
                 message: 'xwillmadeit',
+                price: 12,
+                num: 1,
                 players: [
                 {
                     name: 'kobe',
@@ -34,9 +51,25 @@
                     age: 34
                 }]
             },
+            //在模板中表达式非常便利，但是它们实际上只用于简单的操作。模板是为了描述视图的结构。在模板中放入太多的逻辑会让模板过重且难以维护。这就是为什么 Vue.js 将绑定表达式限制为一个表达式。如果需要多于一个表达式的逻辑，应当使用计算属性。最妙的是我们是声明式地创建这种依赖关系：计算属性的 getter 是干净无副作用的，因此也是易于测试和理解的。
+            computed: {
+                total: function () {
+                  return this.price * this.num
+                }
+            },
+            //生命周期钩子，给自定义逻辑提供运行机会。例如 created 钩子在实例创建后调用：
+            created: function(){
+                console.log('初始化');  
+            },
             methods: {
                 clickMe: function(){
                     alert('yes');
+                },
+                minus: function(){
+                    this.num = parseInt(this.num)-1;
+                },
+                plus: function(){
+                    this.num = parseInt(this.num)+1;
                 }
             }
         })
