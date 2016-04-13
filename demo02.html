@@ -6,12 +6,35 @@
     <body>
         <div id="app1">
             <ul> <!-- 循环列表-->
-                <li v-for="player in players">{{player.name}}---<button v-on:click="deletePlayer($index)">删除</button></li>
+                <li v-for="player in players" track-by="$index">{{player.name}}---<button v-on:click="deletePlayer($index)">删除</button></li>
+                <!-- 从 1.0.17 开始可以使用 player of players 分隔符，更接近 JavaScript 遍历器语法 -->
+
+                <!-- 如果没有唯一的键供追踪，可以使用 track-by="$index"，它强制让 v-for 进入原位更新模式：片断不会被移动，而是简单地以对应索引的新值刷新。这种模式也能处理数据数组中重复的值。
+                这让数据替换非常高效，但是也会付出一定的代价。因为这时 DOM 节点不再映射数组元素顺序的改变，不能同步临时状态（比如 <input> 元素的值）以及组件的私有状态。因此，如果 v-for 块包含 <input> 元素或子组件，要小心使用 track-by="$index" -->
             </ul>
+
+            <div>
+              <span v-for="n in 10">{{ n }} </span>
+            </div>
+
+            <div v-if="100>99">
+                v-if
+            </div>
+            <div v-else>
+                v-else
+            </div>
+            <!-- v-else 元素必须立即跟在 v-if 或 v-show 元素的后面——否则它不能被识别。 -->
+            <!-- 一般来说，v-if 有更高的切换消耗而 v-show 有更高的初始渲染消耗。因此，如果需要频繁切换 v-show 较好，如果在运行时条件不大可能改变 v-if 较好。 -->
             
             <!-- 接收事件 -->
             <input type="text" v-model="name" />
             <button v-on:click="addPlayer">add</button>
+
+            <!-- 只有在 keyCode 是 13 时调用 vm.submit() -->
+            <input v-on:keyup.13="submit">
+            <!-- 提供便捷别名，同上 -->
+            <input v-on:keyup.enter="submit">
+
         </div>
 
         <script src="vue.js"></script>
@@ -28,6 +51,9 @@
                 },
                 deletePlayer: function(i){
                     this.players.splice(i,1);
+                },
+                submit: function(){
+                    alert('回车');
                 }
             }
         })

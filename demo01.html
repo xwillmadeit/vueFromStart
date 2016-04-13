@@ -22,7 +22,7 @@
 
             <div>
                 <p>单价：{{price}}</p>
-                <div><button @click="minus">-</button><input type="text" v-model="num" value="1" /><button @click="plus">+</button></div>
+                <div>数量：<button @click="minus">-</button><input type="text" v-model="num" number value="1"/><button @click="plus">+</button></div>
                 <p>总价：{{total}}</p>
             </div>
         </div>
@@ -66,10 +66,10 @@
                     alert('yes');
                 },
                 minus: function(){
-                    this.num = parseInt(this.num)-1;
+                    this.num-=1;
                 },
                 plus: function(){
-                    this.num = parseInt(this.num)+1;
+                    this.num+=1;
                 }
             }
         })

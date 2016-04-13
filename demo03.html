@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <style>
+            .static{
+                width: 100px;
+                height: 100px;
+                background-color: blue;
+                margin: 10px;
+            }
+            .class-a{
+                background-color: grey;
+            }
+            .class-b{
+                background-color: pink;
+            }
+            .hello{
+                color: green;
+            }
+            .world{
+                font-size: 26px;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="app">
+            <div class="static" v-bind:class="{ 'class-a': isA, 'class-b': isB }"></div>
+            <!-- <div class="static" :class="{ 'class-a': isA, 'class-b': isB }"></div> -->
+            <div class="static" :class="classObj"></div>
+            <p :class="[classA,classB]">绑定class样式——数组</p>
+
+            <p :style="styleObject">绑定内联样式</p>
+            
+        </div>
+
+        <script src="vue.js"></script>
+        <script>
+        new Vue({
+            el: '#app',
+            data: {
+                isA: true,
+                isB: false,
+                //方法二： 直接绑定对象
+                classObj: {
+                    isA: false,
+                    isB: true,
+                },
+                styleObject: {
+                    color: 'red',
+                    fontSize: '13px'
+                },
+                classA: 'hello',
+                classB: 'world'
+            }
+        })
+        </script>
+    </body>
+</html>
