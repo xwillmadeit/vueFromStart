@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+    </head>
+    <body>
+        <div id="app1">
+            {{ message }} 
+            <input type="text" v-model="message" /> <!-- 双向绑定 -->
+
+            <ul> <!-- 循环列表-->
+                <li v-for="player in players">{{player.name}} is {{player.age}} old</li>
+            </ul>
+            
+            <!-- 接收事件 -->
+            <button v-on:click="clickMe">click me</button>
+        </div>
+
+        <script src="vue.js"></script>
+        <script>
+        new Vue({
+            el: '#app1',
+            data: {
+                message: 'xwillmadeit',
+                players: [
+                {
+                    name: 'kobe',
+                    age: 37
+                },{
+                    name: 'duncan',
+                    age: 40
+                },{
+                    name: 'wade',
+                    age: 34
+                }]
+            },
+            methods: {
+                clickMe: function(){
+                    alert('yes');
+                }
+            }
+        })
+        </script>
+    </body>
+</html>
